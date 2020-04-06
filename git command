@@ -1,0 +1,21 @@
+1删除本地分支
+git branch -D branch_name
+
+2删除远程分支
+git push origin --delete branch_name
+
+3修改评论
+git commit --amend  
+
+4撤销一次修改
+git reset --hard commit id
+git push -f
+
+5创建新分支后和远端建立关联
+git push --set-stream origin remote_branch
+
+6git将多个commit提交操作
+  1 git rebase -i HEAD~2
+  2  将其余的pick改为s
+  3  保存弹出修改commit
+  4 git push -f origin branch_name

@@ -1,0 +1,57 @@
+linux的history显示时间
+export HISTTIMEFORMAT='%F %T'
+1k8s的结构	
+	主节点:存储: etcd
+ 	           管控:controller manager
+	           调度:schedluer
+                           api服务:api服务器
+
+
+	k8s里面的pause程序,是同一组pod的父进程,他为同一组pod里面的容器提供以网络,磁盘等的namespace的命名空间的资源隔离
+k8s命令小记
+	kuberctl cluster-info
+		master的地址信息
+		以及DNS信息
+	kubectl get nodes
+		获取k8s的集群节点的基础信息
+
+	kubectl get pods 
+		获取集群里面的pod信息
+
+
+	服务的一些命令
+		k get rc
+	改变集群服务的数量
+		k scale rc 'rc_name' replicas==rc_num
+k8s专业术语
+	调度:k8s的schedluer向api服务发送一条http请求,api服务器会将pod在指定的节点上面部署起来是马上部署起来
+	如果外部想要访问内部的应用需要使用服务将内部服务暴露出来
+	kuberctl get svc
+	输入实例
+	服务   内部IP   外部IP    内部端口/外部端口
+服务
+	服务存在的原因,为pod提供对外部的接口,存在的原因，对于复杂的部署环境pod存在是复杂的,可能随时消亡，当pod被重新拉起
+的时候
+
+端口冲突问题
+	由于同一个pod的进程共同享用同一个命名空间，所以同一组的pod内部的容器里面的进程的端口号不能冲突，不能重复
+不同的pod里面的容器的端口是可以复用 的	
+ 	pod是逻辑主机 docker是主机中的进程
+
+pod的yaml写法
+	apiVersion:api的版本
+	kind:文件的名称
+	metadata:pod的名称以及元信息
+	spec:pod内部的容器元数据信息
+		
+以filename yaml文件形式创建pod
+ 	k create -f filename
+显示pod的labes
+	k get po --show-labels(显示所有pods的标签)
+给pod添加labels
+	k label po kubia-manual key=value
+修改pod的标签
+	k label po kubia-manual key=value --overwrite
+
+
+

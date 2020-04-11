@@ -1,0 +1,83 @@
+如果多次执行同样的命令，即使连接来自于同一个客户端，k8s也不会
+将多次请求发到同一个客户端，而是随机分配
+
+如果想要将请求落在同一个pod上面的需要
+在spec：
+    sessionAffinity:clinentIP
+服务支持多个端口
+
+一个服务暴露多个端口的配置文件写法
+apiVersion:v1
+kind:Service
+metadata:
+    name:kubia
+spec:
+   ports:
+   - name:http
+      port:80
+      targetPort:8080
+    - name:https
+      port:443
+      targetPort:8443
+    selector:
+      app:kubia
+
+在pod中定义指定port名称
+apiVersion:v1
+kind:pod
+spec:
+  containers:
+  - name:kubia
+    ports:
+    - name:http
+      containerPort:8080
+    - name:https
+      containerPort:8443
+
+在服务中引用命名pod
+apiVersion:v1
+kind:Service
+spec:
+  ports:
+  - name:http
+     port:80
+     targetPort:http
+  - name:https
+     port:443
+     targetPort:https(引用pod里面的port里面的port)
+
+pod与服务的发现方式是通过环境变量的形式
+
+pod相关命令
+	k delete po -all 删除所有的pod
+如何进入一个pod
+        	k exec  -it pod_name bash （和docker类似）
+
+服务的虚拟的ip无法通过ping来验证(详情未知)
+FQDN:完全限定域名
+服务也可以重定向到外部服务
+
+在服务与pod之间的东西:entryponit
+
+k get endpoints kubia-http(获取集群的endpoint)
+
+
+
+
+
+
+
+就绪探针
+	
+作用:确保后端服务里面的pod如果还没ready的情况下。外部的请求不会进入该pod，以此来保证外部的访问不会被丢失
+就绪探针的类型分别是
+	http的get请求
+                  socker连接请求
+	exec command请求
+
+服务的三个概念
+	集群IP：可以通过该IP访问服务里面的pod	
+	节点IP:也可以通过节点node的IP访问pod
+	podIP
+	
+当服务的集群IP设置为None的时候，当执行集群的DNS查询的时候会返回每个可以相应的podIP

@@ -1,0 +1,21 @@
+如何删除一个pod
+	k delete po pod_name
+replicationController的代替方案
+	ReplicaSet
+ReplicaSet完全包含了rc的所有功能
+	而且还有更强大的功能
+	1 ReplicaSet可以匹配两组甚至更多的pod
+	2 ReplicaSet支持模糊匹配
+		例如:匹配env=*的标签
+一种特殊情况
+	某个pod需要在所有的k8s节点上面运行
+DaemonSet的特性
+	DaemonSet的会在kubernets上面的每个节点上运行
+他的性质是每个节点上面都会有一个，当新建节点的时候会重新建立一个
+但是当节点下线的时候不会再其他的地方创建
+
+运行执行任务就结束的pod
+job可定期运行
+且可并行运行
+
+

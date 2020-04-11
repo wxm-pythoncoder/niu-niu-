@@ -1,0 +1,14 @@
+k8s中服务的作用
+	服务为pod提供对外服务，外界可以通过服务提供的唯一地址和端口与k8s集群交互
+验证服务能够在k8s集群内部被访问
+
+在一个pod上面执行命令
+	k exec pod_name -- command_name 	
+pod_name 为带有该服务标签的一个pod
+command_name为带有服务的一个服务
+
+该命令的执行过程
+	在任意一个pod上面上执行这个命令，kubernets代理(service)
+截获到该请求并随机请求到一个pod上面,运行完请求，并返回带有pod名称的http
+响应,接着 curl命令标准输出打印返回值
+
